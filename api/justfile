@@ -1,0 +1,7 @@
+default: dev
+
+dev:
+	air
+
+build:
+	go build
