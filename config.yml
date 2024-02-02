@@ -1,0 +1,8 @@
+file-areas:
+  - id: "tmp"
+    name: "tmp"
+    path: "/tmp"
+
+users:
+  - username: "demo"
+    password-clear: "demo"

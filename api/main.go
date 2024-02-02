@@ -1,6 +1,9 @@
 package main
 
 import (
+	"flag"
+	"log"
+	"main/internal/config"
 	"main/internal/g"
 	"net/http"
 
@@ -19,6 +22,16 @@ var customCors = cors.New(cors.Options{
 })
 
 func main() {
+	var configFile string
+
+	flag.StringVar(&configFile, "config", "config.yml", "Config file path")
+	flag.Parse()
+
+	err := config.ReadConfig(configFile)
+	if err != nil {
+		log.Fatal("Failed reading config file: ", err)
+	}
+
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)

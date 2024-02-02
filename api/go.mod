@@ -7,6 +7,7 @@ require (
 	github.com/go-chi/chi/v5 v5.0.11
 	github.com/rs/cors v1.10.1
 	github.com/unrolled/render v1.6.1
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (

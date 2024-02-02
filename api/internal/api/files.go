@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"main/internal/config"
 	"main/internal/g"
 	"mime"
 	"net/http"
@@ -15,25 +16,10 @@ import (
 	"time"
 )
 
-var areas = []Area{
-	{
-		Name: "thnee",
-		Path: "/home/thnee",
-	},
-	{
-		Name: "tmp",
-		Path: "/tmp",
-	},
-	{
-		Name: "big-test",
-		Path: "/home/thnee/big-test",
-	},
-}
-
 func FilesAreasList(w http.ResponseWriter, r *http.Request) {
 	areasData := []g.Data{}
 
-	for _, area := range areas {
+	for _, area := range config.Config.FileAreas {
 		areasData = append(areasData, g.Data{
 			"Name": area.Name,
 		})
@@ -108,9 +94,9 @@ func parseQueryPath(path string) (localPath string, err error) {
 	parts := strings.SplitN(path, string(os.PathSeparator), 2)
 	areaName := parts[0]
 
-	var area *Area
+	var area *config.FileArea
 
-	for _, _area := range areas {
+	for _, _area := range config.Config.FileAreas {
 		if _area.Name == areaName {
 			area = &_area
 			break

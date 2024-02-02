@@ -7,16 +7,14 @@ import api from "$lib/api";
 export class User {
 	constructor(data) {
 		if (data !== null) {
-			this.id = data.ID;
 			this.username = data.Username;
-			this.email = data.Email;
 		} else {
-			this.id = null;
+			this.username = null;
 		}
 	}
 
 	get isLoggedIn() {
-		return this.id != null;
+		return this.username != null;
 	}
 }
 
@@ -29,8 +27,9 @@ export const apiAuth = {
 	},
 
 	async login(params) {
-		await api.auth.login(params);
+		let r = await api.auth.login(params);
 		await this.updateUser();
+		return r;
 	},
 
 	async logout() {
