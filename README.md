@@ -40,7 +40,7 @@ Languages and tools are installed via [mise][mise].
 Install mise.
 
 ```bash
-curl https://mise.jdx.dev/install.sh | sh
+curl https://mise.run | sh
 ```
 
 Install requirements with mise.
