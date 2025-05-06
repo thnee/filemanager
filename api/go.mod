@@ -1,6 +1,6 @@
 module main
 
-go 1.21.5
+go 1.24.0
 
 require (
 	github.com/alexedwards/scs/v2 v2.7.0
