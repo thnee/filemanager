@@ -1,6 +1,8 @@
 import { writable, derived, get } from "svelte/store";
 import { goto } from "$app/navigation";
 
+import api from "../../api";
+
 import File from "../models/File";
 import Area from "../models/Area";
 import Path from "../models/Path";
@@ -22,8 +24,6 @@ class FileBrowser {
 
 		this.prevFile = this.createPrevFile();
 		this.nextFile = this.createNextFile();
-
-		this.baseURL = "http://127.0.0.1:4000/api";
 	}
 
 	async init(path) {
@@ -62,8 +62,8 @@ class FileBrowser {
 	}
 
 	async loadAreas() {
-		let response = await fetch(`${this.baseURL}/files/areas`);
-		let data = await response.json();
+		let r = await api.files.getFileAreas();
+		let data = await r.json();
 		let areas = data.areas.map((areaData) => {
 			return new Area(areaData);
 		});
@@ -72,13 +72,8 @@ class FileBrowser {
 
 	async openFile() {
 		if (this.path.depth > 0) {
-			let response = await fetch(
-				`${this.baseURL}/files/file?` +
-					new URLSearchParams({
-						path: this.path.rendered,
-					}),
-			);
-			let data = await response.json();
+			let r = await api.files.getFile(this.path.rendered);
+			let data = await r.json();
 
 			let file = new File(data);
 			this.file.set(file);
@@ -88,10 +83,8 @@ class FileBrowser {
 	}
 
 	async loadFiles(path) {
-		let response = await fetch(`${this.baseURL}/files/list?` + new URLSearchParams({
-			path: path,
-		}));
-		let data = await response.json();
+		let r = await api.files.getFilesList(path);
+		let data = await r.json();
 
 		let files = [];
 		files = data.Files.map((fileData) => {
