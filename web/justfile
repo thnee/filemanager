@@ -1,7 +1,7 @@
 default: dev
 
 dev:
-	npx vite dev
+	npx vite dev --port 5000
 
 build:
 	npx vite build

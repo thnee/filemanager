@@ -4,12 +4,12 @@ server:
 
   cors:
     allowed-origins:
-      - "http://127.0.0.1:4000"
-      - "http://localhost:4000"
+      - "http://127.0.0.1:5000"
+      - "http://localhost:5000"
 
   session:
     cookie:
-      domain: "localhost:4000"
+      domain: "localhost:5000"
       secure: false
       same-site: "default"
 

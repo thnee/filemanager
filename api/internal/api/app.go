@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"embed"
@@ -10,15 +10,14 @@ import (
 	"path/filepath"
 )
 
-//go:embed web/*
-var frontendFS embed.FS
+var WebFS embed.FS
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	err := tryRead(frontendFS, "web", r.URL.Path, w)
+	err := tryRead(WebFS, "web", r.URL.Path, w)
 	if err == nil {
 		return
 	}
-	err = tryRead(frontendFS, "web", "index.html", w)
+	err = tryRead(WebFS, "web", "index.html", w)
 	if err != nil {
 		panic(err)
 	}

@@ -2,7 +2,7 @@ package api
 
 import (
 	"encoding/json"
-	"main/internal/config"
+	"errors"
 	"main/internal/g"
 	"net/http"
 )
@@ -10,7 +10,11 @@ import (
 func AuthUser(w http.ResponseWriter, r *http.Request) {
 	username := g.Session.GetString(r.Context(), "username")
 
-	user := getUser(username)
+	user, err := getUser(username)
+	if err != nil {
+		g.JSON(w, http.StatusBadRequest, err)
+		return
+	}
 
 	var data g.Data
 
@@ -37,7 +41,11 @@ func AuthLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user := getUser(loginForm.Username)
+	user, err := getUser(loginForm.Username)
+	if err != nil {
+		g.JSON(w, http.StatusBadRequest, err)
+		return
+	}
 
 	if user.Username != "" && loginForm.Password == user.PasswordClear {
 		err := g.Session.RenewToken(r.Context())
@@ -61,12 +69,12 @@ func AuthLogout(w http.ResponseWriter, r *http.Request) {
 	g.Text(w, http.StatusOK, "")
 }
 
-func getUser(username string) config.User {
-	for _, _user := range config.Config.Users {
+func getUser(username string) (g.User, error) {
+	for _, _user := range g.Users {
 		if _user.Username == username {
-			return _user
+			return _user, nil
 		}
 	}
 
-	return config.User{}
+	return g.User{}, errors.New("user not found")
 }

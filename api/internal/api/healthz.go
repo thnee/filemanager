@@ -1,4 +1,4 @@
-package meta
+package api
 
 import (
 	"net/http"

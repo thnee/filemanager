@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"main/internal/config"
 	"main/internal/g"
 	"mime"
 	"net/http"
@@ -14,12 +13,14 @@ import (
 	"strings"
 	"syscall"
 	"time"
+
+	"github.com/spf13/viper"
 )
 
 func FilesAreasList(w http.ResponseWriter, r *http.Request) {
 	areasData := []g.Data{}
 
-	for _, area := range config.Config.FileAreas {
+	for _, area := range g.FileAreas {
 		areasData = append(areasData, g.Data{
 			"Name": area.Name,
 		})
@@ -94,9 +95,9 @@ func parseQueryPath(path string) (localPath string, err error) {
 	parts := strings.SplitN(path, string(os.PathSeparator), 2)
 	areaName := parts[0]
 
-	var area *config.FileArea
+	var area *g.FileArea
 
-	for _, _area := range config.Config.FileAreas {
+	for _, _area := range g.FileAreas {
 		if _area.Name == areaName {
 			area = &_area
 			break
@@ -136,8 +137,8 @@ func getFileDetails(path string, fileInfo os.FileInfo) (data g.Data) {
 		"Atime":       atime.Format(time.RFC3339Nano),
 		"Mtime":       mtime.Format(time.RFC3339Nano),
 		"Ctime":       ctime.Format(time.RFC3339Nano),
-		"DataURL":     "http://127.0.0.1:4000/api/files/data?path=" + path,
-		"DownloadURL": "http://127.0.0.1:4000/api/files/data?path=" + path + "&download",
+		"DataURL":     viper.GetString("server.url") + "/api/files/data?path=" + path,
+		"DownloadURL": viper.GetString("server.url") + "/api/files/data?path=" + path + "&download",
 	}
 }
 

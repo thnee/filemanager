@@ -82,11 +82,10 @@ just build
 ```
 
 Run production executable.  
-It listens on 127.0.0.1:4000.  
 The example config file has one user with username demo and password demo, and one file area for the path `/tmp`.
 
 ```bash
-./main -config config.yml
+./main server --config config.yml
 ```
 
 

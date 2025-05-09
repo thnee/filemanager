@@ -1,7 +1,7 @@
 default: dev
 
 dev:
-	air -- -config ../config.yml
+	air -- server --config ../config-dev.yml
 
 build:
 	go build
