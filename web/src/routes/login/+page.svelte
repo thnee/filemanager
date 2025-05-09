@@ -11,7 +11,6 @@
 			password: event.target.elements.password.value,
 		});
 		if (r.status == 200) {
-			console.log("going");
 			goto("/files");
 		}
 		if (r.status == 400) {
