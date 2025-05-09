@@ -105,7 +105,7 @@ func parseQueryPath(path string) (localPath string, err error) {
 	}
 
 	if area == nil {
-		return "", errors.New("Area not valid")
+		return "", errors.New("area not valid")
 	}
 
 	localPath = area.Path
