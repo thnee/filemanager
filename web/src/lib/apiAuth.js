@@ -22,7 +22,8 @@ export const apiUser = writable(new User(null));
 
 export const apiAuth = {
 	async updateUser() {
-		let data = await api.auth.user();
+		let r = await api.auth.user();
+		let data = await r.json();
 		apiUser.set(new User(data));
 	},
 

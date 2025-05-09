@@ -1,11 +1,9 @@
 import { call } from "./base";
 
 async function user() {
-	let response = await call({
+	return await call({
 		path: "/auth/user",
 	});
-	let data = await response.json();
-	return data;
 }
 
 async function login({username, password}) {
